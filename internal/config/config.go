@@ -13,8 +13,9 @@ var (
 )
 
 type Config struct {
-	LogLevel string `envconfig:"LOG_LEVEL" default:"DEBUG"`
-	Port     int    `envconfig:"PORT"`
+	LogLevel          string `envconfig:"LOG_LEVEL" default:"DEBUG"`
+	Port              int    `envconfig:"PORT"`
+	CORSAllowedOrigin string `envconfig:"CORS_ALLOWED_ORIGINS"`
 }
 
 func Get() *Config {

@@ -5,8 +5,11 @@ import (
 	//  "log"
 
 	// "github.com/JaredSnapp/go_backend/io/inputs/HTTPHandler"
-	HTTPHandler "github.com/JaredSnapp/go_backend/internal/io/inputs"
+
+	"github.com/JaredSnapp/go_backend/internal/config"
+	HTTPHandler "github.com/JaredSnapp/go_backend/internal/io/inputs/http"
 	"github.com/JaredSnapp/go_backend/internal/models"
+	"github.com/JaredSnapp/go_backend/internal/service/persons"
 	"github.com/spf13/cobra"
 )
 
@@ -22,6 +25,10 @@ func main(cmd *cobra.Command, args []string) {
 	person := models.Person{Name: "george", Age: 24}
 	printPerson(&person)
 
+	ps := persons.NewService()
+
+	conf := config.Get()
+	HTTPHandler := HTTPHandler.NewHandler(conf, ps)
 	HTTPHandler.Serve()
 
 	// Serve()
