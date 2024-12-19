@@ -7,4 +7,6 @@ import (
 type PersonsService interface {
 	GetPersons() (*[]models.Person, error)
 	AddPerson(newPerson *models.Person) (*models.Person, error)
+	UpdatePerson(newPerson *models.Person) (*models.Person, error)
+	DeletePerson(id string) error
 }

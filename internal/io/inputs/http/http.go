@@ -50,6 +50,8 @@ func (h Handler) NewRouter() *web.Service {
 
 	service.Get("/persons", h.getPersons())
 	service.Post("/persons", h.postPerson())
+	service.Put("/persons/{id}", h.putPerson())
+	service.Delete("/persons/{id}", h.deletePerson())
 
 	service.Docs("/docs", swgui.New)
 

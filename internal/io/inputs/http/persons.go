@@ -11,6 +11,11 @@ import (
 type getPersonsInput struct {
 }
 
+type PutPersonInput struct {
+	Id string `path:"id" required:"true" description:"document id of shift to retrieve"`
+	models.Person
+}
+
 func (h Handler) getPersons() usecase.Interactor {
 	f := func(ctx context.Context, input getPersonsInput, output *[]models.Person) error {
 		persons, err := h.PersonsService.GetPersons()
@@ -42,5 +47,37 @@ func (h Handler) postPerson() usecase.Interactor {
 	interactor := usecase.NewInteractor(f)
 	interactor.SetDescription("Create Person")
 	interactor.SetTitle("Create Person")
+	return interactor
+}
+
+func (h Handler) putPerson() usecase.Interactor {
+	f := func(ctx context.Context, input PutPersonInput, output *models.Person) error {
+		input.Person.SetID(input.Id)
+		person, err := h.PersonsService.UpdatePerson(&input.Person)
+
+		*output = *person
+
+		return err
+	}
+
+	interactor := usecase.NewInteractor(f)
+	interactor.SetDescription("Update Person")
+	interactor.SetTitle("Update Person")
+	return interactor
+}
+
+func (h Handler) deletePerson() usecase.Interactor {
+	f := func(ctx context.Context, input *models.DeleteInput, output *models.EmptyBody) error {
+
+		err := h.PersonsService.DeletePerson(input.Id)
+
+		// *output = *person
+
+		return err
+	}
+
+	interactor := usecase.NewInteractor(f)
+	interactor.SetDescription("Delete Person")
+	interactor.SetTitle("Delete Person")
 	return interactor
 }
