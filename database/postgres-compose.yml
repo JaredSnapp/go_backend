@@ -4,13 +4,12 @@ services:
     image: 'postgres:latest'
     ports:
       - 5432:5432
-
+    networks:
+      - postgres-network
     environment:
       POSTGRES_DB: default_database 
-
     env_file:
     - postgres.env
-
     volumes:
     - ${PWD}/database/db-data/:/var/lib/postgresql/data/
 

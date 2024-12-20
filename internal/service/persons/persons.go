@@ -9,48 +9,64 @@ import (
 
 type Service struct {
 	Peeps *[]models.Person
+	repo  PersonRepo
 }
 
-type PersonsRepo interface {
+type PersonRepo interface {
+	CreatePerson(person *models.Person) error
 	GetPersons() (*[]models.Person, error)
-	AddPerson(newPerson *models.Person) (*models.Person, error)
-	UpdatePerson(newPerson *models.Person) (*models.Person, error)
-	DeletePerson(id string) error
+	GetPersonById(personID string) (*models.Person, error)
+	UpdatePerson(person *models.Person) (*models.Person, error)
+	DeletePerson(id uuid.UUID) error
 }
 
-func NewService() *Service {
+func NewService(repo PersonRepo) *Service {
 	peeps := make([]models.Person, 0)
 	return &Service{
 		Peeps: &peeps,
+		repo:  repo,
 	}
 }
 
 func (ps Service) GetPersons() (*[]models.Person, error) {
-	return ps.Peeps, nil
+	peeps, err := ps.repo.GetPersons()
+	if err != nil {
+		return nil, err
+	}
+
+	return peeps, nil
 }
 
 func (ps Service) AddPerson(newPerson *models.Person) (*models.Person, error) {
-	fmt.Println("persons.AddPerson")
-	fmt.Printf("%+v\n", newPerson)
-
-	newPerson.Id = uuid.New().String()
-	*ps.Peeps = append(*ps.Peeps, *newPerson)
+	newPerson.Id = uuid.New()
+	err := ps.repo.CreatePerson(newPerson)
+	if err != nil {
+		return nil, err
+	}
 
 	return newPerson, nil
 }
 
-// TODO: Update the person when we move to DB
 func (ps Service) UpdatePerson(person *models.Person) (*models.Person, error) {
 	fmt.Println("Update person")
 	fmt.Println(person.Id)
 
+	person, err := ps.repo.UpdatePerson(person)
+	if err != nil {
+		return nil, err
+	}
+
 	return person, nil
 }
 
-// TODO: delete when we move to DB
-func (ps Service) DeletePerson(id string) error {
+func (ps Service) DeletePerson(id uuid.UUID) error {
 	fmt.Println("Delete person")
 	fmt.Println(id)
+
+	err := ps.repo.DeletePerson(id)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

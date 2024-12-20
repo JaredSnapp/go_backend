@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/JaredSnapp/go_backend/internal/models"
+	"github.com/google/uuid"
 	"github.com/swaggest/usecase"
 )
 
@@ -12,7 +13,7 @@ type getPersonsInput struct {
 }
 
 type PutPersonInput struct {
-	Id string `path:"id" required:"true" description:"document id of shift to retrieve"`
+	Id uuid.UUID `path:"id" required:"true" description:"document id of shift to retrieve"`
 	models.Person
 }
 
@@ -52,6 +53,7 @@ func (h Handler) postPerson() usecase.Interactor {
 
 func (h Handler) putPerson() usecase.Interactor {
 	f := func(ctx context.Context, input PutPersonInput, output *models.Person) error {
+
 		input.Person.SetID(input.Id)
 		person, err := h.PersonsService.UpdatePerson(&input.Person)
 
@@ -70,8 +72,6 @@ func (h Handler) deletePerson() usecase.Interactor {
 	f := func(ctx context.Context, input *models.DeleteInput, output *models.EmptyBody) error {
 
 		err := h.PersonsService.DeletePerson(input.Id)
-
-		// *output = *person
 
 		return err
 	}

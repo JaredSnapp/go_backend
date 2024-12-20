@@ -17,6 +17,12 @@ Additional features:
 `go mod tidy`
 `go mod vendor`
 
+`docker ps` - view docker containers
+`docker network ls` - list docker networks
+`docker network inspect <network name>` - inspect network
+
+`pg_isready -p 5432` - check if postgres database is available
+
 
 ## Database
 Compose file built from https://github.com/felipewom/docker-compose-postgres
@@ -33,9 +39,9 @@ Compose file built from https://github.com/felipewom/docker-compose-postgres
 3. Data will be stored in `DB` folder in project folder
 
 ### Run
-`make start_db` - Run DB
-`make stop_db` - Stop DB
-`docker ps` - Check what containers are running on docker
+- `make start_db` - Run DB
+- `make stop_db` - Stop DB
+- `docker ps` - Check what containers are running on docker
 
 ### Maintenance
 Can access DB in browser at [localhost:15433](localhost:15433)
