@@ -1,0 +1,32 @@
+
+services:
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+
+    environment:
+      POSTGRES_DB: default_database 
+
+    env_file:
+    - postgres.env
+
+    volumes:
+    - ${PWD}/database/db-data/:/var/lib/postgresql/data/
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 15433:80
+    env_file:
+      - postgres.env
+    depends_on:
+      - database
+    networks:
+      - postgres-network
+    volumes:
+      - ${PWD}/database/pgadmin-data/:/var/lib/pgadmin/
+
+networks: 
+  postgres-network:
+    driver: bridge

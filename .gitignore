@@ -1,2 +1,6 @@
 .DS_Store
 *.env
+
+# Database
+database/db-data/
+database/pgadmin-data/
