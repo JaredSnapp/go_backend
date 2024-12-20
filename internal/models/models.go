@@ -1,17 +1,19 @@
 package models
 
+import "github.com/google/uuid"
+
 type Person struct {
-	Id   string `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
-	Age  int    `json:"age,omitempty"`
+	Id   uuid.UUID `json:"id,omitempty" gorm:"primaryKey"`
+	Name string    `json:"name,omitempty" gorm:"omitempty"`
+	Age  int       `json:"age,omitempty"`
 }
 
-func (p *Person) SetID(id string) {
+func (p *Person) SetID(id uuid.UUID) {
 	p.Id = id
 }
 
 type DeleteInput struct {
-	Id string `path:"id" required:"true" description:"document id to delete"`
+	Id uuid.UUID `path:"id" required:"true" description:"document id to delete"`
 }
 
 type EmptyBody struct{}
