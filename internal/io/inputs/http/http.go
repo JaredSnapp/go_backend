@@ -59,6 +59,13 @@ func (h Handler) NewRouter() *web.Service {
 	service.Put("/goal/{id}", goals.Put())
 	service.Delete("/goal/{id}", goals.Delete())
 
+	action := NewCrud[models.Action, models.ActionPutInput]("action", h.ActionService)
+
+	service.Get("/action", action.Get())
+	service.Post("/action", action.Post())
+	service.Put("/action/{id}", action.Put())
+	service.Delete("/action/{id}", action.Delete())
+
 	service.Docs("/docs", swgui.New)
 
 	// Use cases can be mounted using short syntax .<Method>(...).

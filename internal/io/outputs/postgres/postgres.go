@@ -47,5 +47,11 @@ func (pg *Service) Migrate() error {
 		return err
 	}
 
+	err = pg.db.AutoMigrate(&models.Action{})
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
 	return nil
 }

@@ -1,4 +1,4 @@
-package goals
+package action
 
 import (
 	"fmt"
@@ -9,16 +9,16 @@ import (
 )
 
 type Service struct {
-	repo service.DbGenericInterface[models.GoalMetaData]
+	repo service.DbGenericInterface[models.Action]
 }
 
-func NewService(repo service.DbGenericInterface[models.GoalMetaData]) *Service {
+func NewService(repo service.DbGenericInterface[models.Action]) *Service {
 	return &Service{
 		repo: repo,
 	}
 }
 
-func (ps Service) Get() (*[]models.GoalMetaData, error) {
+func (ps Service) Get() (*[]models.Action, error) {
 	data, err := ps.repo.Get()
 	if err != nil {
 		return nil, err
@@ -27,9 +27,9 @@ func (ps Service) Get() (*[]models.GoalMetaData, error) {
 	return data, nil
 }
 
-func (ps Service) Add(data models.GoalMetaData) (*models.GoalMetaData, error) {
+func (ps Service) Add(data models.Action) (*models.Action, error) {
 	data.Id = uuid.New()
-	fmt.Println("Create new goal")
+	fmt.Println("Create new action")
 	// fmt.Println(data)
 	fmt.Printf("%+v\n", data)
 	err := ps.repo.Create(&data)
@@ -40,8 +40,8 @@ func (ps Service) Add(data models.GoalMetaData) (*models.GoalMetaData, error) {
 	return &data, nil
 }
 
-func (ps Service) Update(id uuid.UUID, data models.GoalMetaData) (*models.GoalMetaData, error) {
-	fmt.Println("Update GoalMetaData")
+func (ps Service) Update(id uuid.UUID, data models.Action) (*models.Action, error) {
+	fmt.Println("Update action")
 	data.Id = id
 
 	fmt.Printf("%+v\n", data)
@@ -55,7 +55,7 @@ func (ps Service) Update(id uuid.UUID, data models.GoalMetaData) (*models.GoalMe
 }
 
 func (ps Service) Delete(id uuid.UUID) error {
-	fmt.Println("Delete person")
+	fmt.Println("Delete action")
 	fmt.Println(id)
 
 	err := ps.repo.Delete(id)

@@ -18,3 +18,10 @@ type GoalsService interface {
 	Update(id uuid.UUID, goal models.GoalMetaData) (*models.GoalMetaData, error)
 	Delete(id uuid.UUID) error
 }
+
+type ActionService interface {
+	Get() (*[]models.Action, error)
+	Add(data models.Action) (*models.Action, error)
+	Update(id uuid.UUID, data models.Action) (*models.Action, error)
+	Delete(id uuid.UUID) error
+}

@@ -11,9 +11,10 @@ type Handler struct {
 	corsAllowedOrigin []string
 	PersonsService    PersonsService
 	GoalsService      GoalsService
+	ActionService     ActionService
 }
 
-func NewHandler(conf *config.Config, ps PersonsService, gs GoalsService) *Handler {
+func NewHandler(conf *config.Config, ps PersonsService, gs GoalsService, as ActionService) *Handler {
 
 	corsOrigins := strings.Split(conf.CORSAllowedOrigin, ",")
 	return &Handler{
@@ -21,5 +22,6 @@ func NewHandler(conf *config.Config, ps PersonsService, gs GoalsService) *Handle
 		corsAllowedOrigin: corsOrigins,
 		PersonsService:    ps,
 		GoalsService:      gs,
+		ActionService:     as,
 	}
 }
