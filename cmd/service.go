@@ -4,6 +4,8 @@ import (
 	"github.com/JaredSnapp/go_backend/internal/config"
 	HTTPHandler "github.com/JaredSnapp/go_backend/internal/io/inputs/http"
 	"github.com/JaredSnapp/go_backend/internal/io/outputs/postgres"
+	"github.com/JaredSnapp/go_backend/internal/models"
+	"github.com/JaredSnapp/go_backend/internal/service/goals"
 	"github.com/JaredSnapp/go_backend/internal/service/persons"
 	"github.com/spf13/cobra"
 )
@@ -26,9 +28,13 @@ func main(cmd *cobra.Command, args []string) {
 		panic("Error Migrating DB")
 	}
 
-	ps := persons.NewService(db)
+	// goalDB := postgres.GenericGen[*models.GoalMetaData](db)
+	goalDB := postgres.Repo[models.GoalMetaData]{Pg: db}
 
-	HTTPHandler := HTTPHandler.NewHandler(conf, ps)
+	ps := persons.NewService(db)
+	g := goals.NewService(goalDB)
+
+	HTTPHandler := HTTPHandler.NewHandler(conf, ps, g)
 
 	HTTPHandler.Serve()
 }

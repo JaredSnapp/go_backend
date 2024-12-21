@@ -11,3 +11,10 @@ type PersonsService interface {
 	UpdatePerson(newPerson *models.Person) (*models.Person, error)
 	DeletePerson(id uuid.UUID) error
 }
+
+type GoalsService interface {
+	Get() (*[]models.GoalMetaData, error)
+	Add(goal models.GoalMetaData) (*models.GoalMetaData, error)
+	Update(id uuid.UUID, goal models.GoalMetaData) (*models.GoalMetaData, error)
+	Delete(id uuid.UUID) error
+}

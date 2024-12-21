@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/JaredSnapp/go_backend/internal/models"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/cors"
 	"github.com/swaggest/openapi-go/openapi31"
@@ -46,12 +47,17 @@ func (h Handler) NewRouter() *web.Service {
 		cors.AllowAll().Handler, // "github.com/rs/cors", 3rd-party CORS middleware can also be configured here.
 	)
 
-	service.Get("/", h.homePage())
-
 	service.Get("/persons", h.getPersons())
 	service.Post("/persons", h.postPerson())
 	service.Put("/persons/{id}", h.putPerson())
 	service.Delete("/persons/{id}", h.deletePerson())
+
+	goals := NewCrud[models.GoalMetaData, models.GoalPutInput]("goal", h.GoalsService)
+
+	service.Get("/goal", goals.Get())
+	service.Post("/goal", goals.Post())
+	service.Put("/goal/{id}", goals.Put())
+	service.Delete("/goal/{id}", goals.Delete())
 
 	service.Docs("/docs", swgui.New)
 

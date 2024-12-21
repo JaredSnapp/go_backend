@@ -41,5 +41,11 @@ func (pg *Service) Migrate() error {
 		return err
 	}
 
+	err = pg.db.AutoMigrate(&models.GoalMetaData{})
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
 	return nil
 }

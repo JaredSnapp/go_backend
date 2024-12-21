@@ -13,8 +13,8 @@ type getPersonsInput struct {
 }
 
 type PutPersonInput struct {
-	Id uuid.UUID `path:"id" required:"true" description:"document id of shift to retrieve"`
-	models.Person
+	Id   uuid.UUID `path:"id" required:"true" description:"document id of shift to retrieve"`
+	Data models.Person
 }
 
 func (h Handler) getPersons() usecase.Interactor {
@@ -54,8 +54,8 @@ func (h Handler) postPerson() usecase.Interactor {
 func (h Handler) putPerson() usecase.Interactor {
 	f := func(ctx context.Context, input PutPersonInput, output *models.Person) error {
 
-		input.Person.SetID(input.Id)
-		person, err := h.PersonsService.UpdatePerson(&input.Person)
+		input.Data.SetID(input.Id)
+		person, err := h.PersonsService.UpdatePerson(&input.Data)
 
 		*output = *person
 
