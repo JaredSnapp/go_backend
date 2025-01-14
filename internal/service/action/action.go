@@ -28,7 +28,7 @@ func (ps Service) Get() (*[]models.Action, error) {
 }
 
 func (ps Service) Add(data models.Action) (*models.Action, error) {
-	data.Id = uuid.New()
+	data.ID = uuid.New()
 	fmt.Println("Create new action")
 	// fmt.Println(data)
 	fmt.Printf("%+v\n", data)
@@ -42,7 +42,7 @@ func (ps Service) Add(data models.Action) (*models.Action, error) {
 
 func (ps Service) Update(id uuid.UUID, data models.Action) (*models.Action, error) {
 	fmt.Println("Update action")
-	data.Id = id
+	data.ID = id
 
 	fmt.Printf("%+v\n", data)
 

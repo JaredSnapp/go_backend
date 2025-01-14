@@ -13,9 +13,9 @@ type PersonsService interface {
 }
 
 type GoalsService interface {
-	Get() (*[]models.GoalMetaData, error)
-	Add(goal models.GoalMetaData) (*models.GoalMetaData, error)
-	Update(id uuid.UUID, goal models.GoalMetaData) (*models.GoalMetaData, error)
+	Get() (*[]models.Goal, error)
+	Add(goal models.Goal) (*models.Goal, error)
+	Update(id uuid.UUID, goal models.Goal) (*models.Goal, error)
 	Delete(id uuid.UUID) error
 }
 
@@ -23,5 +23,12 @@ type ActionService interface {
 	Get() (*[]models.Action, error)
 	Add(data models.Action) (*models.Action, error)
 	Update(id uuid.UUID, data models.Action) (*models.Action, error)
+	Delete(id uuid.UUID) error
+}
+
+type RecruiterService interface {
+	Get() (*[]models.Recruiter, error)
+	Add(data models.Recruiter) (*models.Recruiter, error)
+	Update(id uuid.UUID, data models.Recruiter) (*models.Recruiter, error)
 	Delete(id uuid.UUID) error
 }

@@ -6,13 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
-// TODO: Add user
-// TODO: Look into relations. Type should probably be relation to goal
 type Action struct {
-	Id        uuid.UUID `json:"id" gorm:"primaryKey"`
-	Type      string    `json:"type,omitempty" gorm:"omitempty"`
+	ID        uuid.UUID `json:"id" gorm:"primaryKey"`
 	Done      bool      `json:"done,omitempty" gorm:"omitempty"`
 	Value     int       `json:"value,omitempty" gorm:"omitempty"`
+	GoalID    uuid.UUID `json:"goal_id,omitempty" gorm:""`
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 

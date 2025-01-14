@@ -8,18 +8,23 @@ import (
 	"github.com/google/uuid"
 )
 
-type Service struct {
-	repo service.DbGenericInterface[models.GoalMetaData]
+type Repo interface {
+	service.DbGenericInterface[models.Goal]
+	DeleteGoal(id uuid.UUID) error
 }
 
-func NewService(repo service.DbGenericInterface[models.GoalMetaData]) *Service {
+type Service struct {
+	repo Repo
+}
+
+func NewService(repo Repo) *Service {
 	return &Service{
 		repo: repo,
 	}
 }
 
-func (ps Service) Get() (*[]models.GoalMetaData, error) {
-	data, err := ps.repo.Get()
+func (ps Service) Get() (*[]models.Goal, error) {
+	data, err := ps.repo.GetWithRelation("Actions")
 	if err != nil {
 		return nil, err
 	}
@@ -27,8 +32,8 @@ func (ps Service) Get() (*[]models.GoalMetaData, error) {
 	return data, nil
 }
 
-func (ps Service) Add(data models.GoalMetaData) (*models.GoalMetaData, error) {
-	data.Id = uuid.New()
+func (ps Service) Add(data models.Goal) (*models.Goal, error) {
+	data.ID = uuid.New()
 	fmt.Println("Create new goal")
 	// fmt.Println(data)
 	fmt.Printf("%+v\n", data)
@@ -40,9 +45,9 @@ func (ps Service) Add(data models.GoalMetaData) (*models.GoalMetaData, error) {
 	return &data, nil
 }
 
-func (ps Service) Update(id uuid.UUID, data models.GoalMetaData) (*models.GoalMetaData, error) {
+func (ps Service) Update(id uuid.UUID, data models.Goal) (*models.Goal, error) {
 	fmt.Println("Update GoalMetaData")
-	data.Id = id
+	data.ID = id
 
 	fmt.Printf("%+v\n", data)
 
@@ -57,8 +62,9 @@ func (ps Service) Update(id uuid.UUID, data models.GoalMetaData) (*models.GoalMe
 func (ps Service) Delete(id uuid.UUID) error {
 	fmt.Println("Delete person")
 	fmt.Println(id)
+	emptyAction := models.Action{}
 
-	err := ps.repo.Delete(id)
+	err := ps.repo.DeleteWithRelation(id, &emptyAction, "goal_id")
 	if err != nil {
 		return err
 	}

@@ -12,9 +12,19 @@ type Repo[T any] struct {
 
 func (r Repo[T]) Get() (*[]T, error) {
 	var data []T
-	result := r.Pg.db.Find(&data)
-	if result.Error != nil {
-		return nil, result.Error
+	err := r.Pg.db.Find(&data).Error
+	if err != nil {
+		return nil, err
+	}
+	return &data, nil
+}
+
+func (r Repo[T]) GetWithRelation(name string) (*[]T, error) {
+	var temp T
+	var data []T
+	err := r.Pg.db.Model(&temp).Preload(name).Find(&data).Error
+	if err != nil {
+		return nil, err
 	}
 	return &data, nil
 }
@@ -40,6 +50,19 @@ func (r Repo[T]) Update(data *T) (*T, error) {
 }
 
 func (r Repo[T]) Delete(id uuid.UUID) error {
+	result := r.Pg.db.Delete(new(T), id)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
+
+func (r Repo[T]) DeleteWithRelation(id uuid.UUID, emptyType any, idName string) error {
+	r.Pg.db.Model(emptyType).Where(idName+" = ?", id).Delete(emptyType)
+
+	fmt.Println("Done deleting associated record...")
+
+	// result := r.Pg.db.Select(name).Delete(new(T), id)
 	result := r.Pg.db.Delete(new(T), id)
 	if result.Error != nil {
 		return result.Error

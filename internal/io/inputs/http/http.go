@@ -52,7 +52,7 @@ func (h Handler) NewRouter() *web.Service {
 	service.Put("/persons/{id}", h.putPerson())
 	service.Delete("/persons/{id}", h.deletePerson())
 
-	goals := NewCrud[models.GoalMetaData, models.GoalPutInput]("goal", h.GoalsService)
+	goals := NewCrud[models.Goal, models.GoalPutInput]("goal", h.GoalsService)
 
 	service.Get("/goal", goals.Get())
 	service.Post("/goal", goals.Post())
@@ -65,6 +65,13 @@ func (h Handler) NewRouter() *web.Service {
 	service.Post("/action", action.Post())
 	service.Put("/action/{id}", action.Put())
 	service.Delete("/action/{id}", action.Delete())
+
+	recruiter := NewCrud[models.Recruiter, models.RecruiterPutInput]("action", h.RecruiterService)
+
+	service.Get("/recruiter", recruiter.Get())
+	service.Post("/recruiter", recruiter.Post())
+	service.Put("/recruiter/{id}", recruiter.Put())
+	service.Delete("/recruiter/{id}", recruiter.Delete())
 
 	service.Docs("/docs", swgui.New)
 
