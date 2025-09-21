@@ -1,16 +1,11 @@
 
+# Run
+- Start docker
+- `make start_db`
+- `make start_service`
 
-
-## MVP
-- Clean folder structure
-- CRUD for one table
-- Postgres
-
-
-Additional features:
-- Swagger?
-
-
+## API Docs
+localhost:3000/docs
 
 
 ## Common commands 

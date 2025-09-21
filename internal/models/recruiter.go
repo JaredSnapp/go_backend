@@ -14,6 +14,7 @@ type Recruiter struct {
 	CreatedAt   time.Time `json:"created_at,omitempty"`
 	UpdatedAt   time.Time `json:"updated_at,omitempty"`
 	LastContact time.Time `json:"last_contact,omitempty"`
+	RichText    RichText  `gorm:"foreignKey:RecruiterID;constraint:OnDelete:CASCADE;"`
 }
 
 type RecruiterPutInput struct {

@@ -32,3 +32,10 @@ type RecruiterService interface {
 	Update(id uuid.UUID, data models.Recruiter) (*models.Recruiter, error)
 	Delete(id uuid.UUID) error
 }
+
+type RichTextService interface {
+	Get() (*[]models.RichText, error)
+	Add(data models.RichText) (*models.RichText, error)
+	Update(id uuid.UUID, data models.RichText) (*models.RichText, error)
+	Delete(id uuid.UUID) error
+}

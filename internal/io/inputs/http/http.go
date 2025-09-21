@@ -66,12 +66,19 @@ func (h Handler) NewRouter() *web.Service {
 	service.Put("/action/{id}", action.Put())
 	service.Delete("/action/{id}", action.Delete())
 
-	recruiter := NewCrud[models.Recruiter, models.RecruiterPutInput]("action", h.RecruiterService)
+	recruiter := NewCrud[models.Recruiter, models.RecruiterPutInput]("recruiter", h.RecruiterService)
 
 	service.Get("/recruiter", recruiter.Get())
 	service.Post("/recruiter", recruiter.Post())
 	service.Put("/recruiter/{id}", recruiter.Put())
 	service.Delete("/recruiter/{id}", recruiter.Delete())
+
+	richText := NewCrud[models.RichText, models.RichTextPutInput]("richText", h.RichTextService)
+
+	service.Get("/richText", richText.Get())
+	service.Post("/richText", richText.Post())
+	service.Put("/richText/{id}", richText.Put())
+	service.Delete("/richText/{id}", richText.Delete())
 
 	service.Docs("/docs", swgui.New)
 

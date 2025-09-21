@@ -19,7 +19,7 @@ func NewService(repo service.DbGenericInterface[models.Recruiter]) *Service {
 }
 
 func (ps Service) Get() (*[]models.Recruiter, error) {
-	data, err := ps.repo.Get()
+	data, err := ps.repo.GetWithRelation("RichText")
 	if err != nil {
 		return nil, err
 	}
@@ -29,6 +29,14 @@ func (ps Service) Get() (*[]models.Recruiter, error) {
 
 func (ps Service) Add(data models.Recruiter) (*models.Recruiter, error) {
 	data.ID = uuid.New()
+
+	// richText := models.RichText{
+	// 	RecruiterID: data.ID,
+	// 	ID:          uuid.New(),
+	// }
+
+	// data.RichTextId
+
 	fmt.Println("Create new action")
 	// fmt.Println(data)
 	fmt.Printf("%+v\n", data)
@@ -36,6 +44,15 @@ func (ps Service) Add(data models.Recruiter) (*models.Recruiter, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// // Create new richText
+	// richText := models.RichText{
+	// 	RecruiterID: data.ID,
+	// }
+	// _, err = ps.repo.Create(&richText)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	return &data, nil
 }
