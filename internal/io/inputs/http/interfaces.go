@@ -12,19 +12,19 @@ type PersonsService interface {
 	DeletePerson(id uuid.UUID) error
 }
 
-type GoalsService interface {
-	Get() (*[]models.Goal, error)
-	Add(goal models.Goal) (*models.Goal, error)
-	Update(id uuid.UUID, goal models.Goal) (*models.Goal, error)
-	Delete(id uuid.UUID) error
-}
+// type GoalsService interface {
+// 	Get() (*[]models.Goal, error)
+// 	Add(goal models.Goal) (*models.Goal, error)
+// 	Update(id uuid.UUID, goal models.Goal) (*models.Goal, error)
+// 	Delete(id uuid.UUID) error
+// }
 
-type ActionService interface {
-	Get() (*[]models.Action, error)
-	Add(data models.Action) (*models.Action, error)
-	Update(id uuid.UUID, data models.Action) (*models.Action, error)
-	Delete(id uuid.UUID) error
-}
+// type ActionService interface {
+// 	Get() (*[]models.Action, error)
+// 	Add(data models.Action) (*models.Action, error)
+// 	Update(id uuid.UUID, data models.Action) (*models.Action, error)
+// 	Delete(id uuid.UUID) error
+// }
 
 type RecruiterService interface {
 	Get() (*[]models.Recruiter, error)
