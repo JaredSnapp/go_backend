@@ -41,18 +41,6 @@ func (pg *Service) Migrate() error {
 		return err
 	}
 
-	// err = pg.db.AutoMigrate(&models.Goal{})
-	// if err != nil {
-	// 	log.Fatal(err)
-	// 	return err
-	// }
-
-	// err = pg.db.AutoMigrate(&models.Action{})
-	// if err != nil {
-	// 	log.Fatal(err)
-	// 	return err
-	// }
-
 	err = pg.db.AutoMigrate(&models.Recruiter{})
 	if err != nil {
 		log.Fatal(err)

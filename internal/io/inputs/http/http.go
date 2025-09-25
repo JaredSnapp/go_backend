@@ -52,20 +52,6 @@ func (h Handler) NewRouter() *web.Service {
 	service.Put("/persons/{id}", h.putPerson())
 	service.Delete("/persons/{id}", h.deletePerson())
 
-	// goals := NewCrud[models.Goal, models.GoalPutInput]("goal", h.GoalsService)
-
-	// service.Get("/goal", goals.Get())
-	// service.Post("/goal", goals.Post())
-	// service.Put("/goal/{id}", goals.Put())
-	// service.Delete("/goal/{id}", goals.Delete())
-
-	// action := NewCrud[models.Action, models.ActionPutInput]("action", h.ActionService)
-
-	// service.Get("/action", action.Get())
-	// service.Post("/action", action.Post())
-	// service.Put("/action/{id}", action.Put())
-	// service.Delete("/action/{id}", action.Delete())
-
 	recruiter := NewCrud[models.Recruiter, models.RecruiterPutInput]("recruiter", h.RecruiterService)
 
 	service.Get("/recruiter", recruiter.Get())

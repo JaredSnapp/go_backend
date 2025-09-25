@@ -29,19 +29,13 @@ func main(cmd *cobra.Command, args []string) {
 		panic("Error Migrating DB")
 	}
 
-	// goalDB := postgres.GenericGen[*models.GoalMetaData](db)
-	// goalDB := postgres.Repo[models.Goal]{Pg: db}
-	// actionDB := postgres.Repo[models.Action]{Pg: db}
 	recruiterDB := postgres.Repo[models.Recruiter]{Pg: db}
 	richTextDB := postgres.Repo[models.RichText]{Pg: db}
 
 	ps := persons.NewService(db)
-	// g := goals.NewService(goalDB)
-	// a := action.NewService(actionDB)
 	r := recruiter.NewService(recruiterDB)
 	rt := richText.NewService(richTextDB)
 
-	// HTTPHandler := HTTPHandler.NewHandler(conf, ps, g, a, r, rt)
 	HTTPHandler := HTTPHandler.NewHandler(conf, ps, r, rt)
 
 	HTTPHandler.Serve()
